@@ -17,12 +17,12 @@ export const BannerBuy = ({ product }: BannerBuyProps) => {
     <div className="flex">
       <div className="flex flex-col border-r border-zinc-500 pr-5">
         <div className="line-through text-zinc-400">
-          de R$ {product?.basePrice}
+          de {Coin.formate(product?.basePrice)}
         </div>
         <div className="text-2xl font-semibold">
           <span className="text-base text-zinc-300">por</span>{" "}
           <span className="text-emerald-500">
-            R$ {product?.promotionalPrice}
+            {Coin.formate(product?.promotionalPrice)}
           </span>{" "}
           <span className="text-base text-zinc-300">à vista</span>
         </div>
