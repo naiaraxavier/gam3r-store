@@ -3,6 +3,7 @@ import { IconCreditCard, IconShoppingCart } from "@tabler/icons-react";
 import { useInstallment } from "@/data/hooks/useInstallment";
 import { useRouter } from "next/navigation";
 import { Coin, Product } from "@gstore/core";
+import useCart from "@/data/hooks/useCart";
 
 export interface BannerBuyProps {
   product: Product;
@@ -10,7 +11,7 @@ export interface BannerBuyProps {
 
 export const BannerBuy = ({ product }: BannerBuyProps) => {
   const router = useRouter();
-  // const { adicionarItem } = useCarrinho()
+  const { addItem } = useCart();
   const installment = useInstallment(product.promotionalPrice);
 
   return (
@@ -36,8 +37,7 @@ export const BannerBuy = ({ product }: BannerBuyProps) => {
       <div className="flex gap-2 items-center">
         <button
           className="flex-1 button bg-pink-600"
-          onClick={() => {}}
-          // onClick={() => adicionarItem(produto)}
+          onClick={() => addItem(product)}
         >
           <IconShoppingCart size={20} />
           <span>Adicionar</span>
@@ -45,7 +45,7 @@ export const BannerBuy = ({ product }: BannerBuyProps) => {
         <button
           className="flex-1 button bg-violet-700"
           onClick={() => {
-            // adicionarItem(produto)
+            addItem(product);
             router.push("/checkout/payment");
           }}
         >

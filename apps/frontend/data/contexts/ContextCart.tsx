@@ -11,7 +11,7 @@ import {
 
 export interface ContextCartProps {
   items: CartItem[];
-  qtdeItems: number;
+  qtItems: number;
   totalValueFull: number;
   totalValue: number;
   installment: Installment;
@@ -57,7 +57,7 @@ export const ProviderCart = (props: any) => {
     <ContextCart.Provider
       value={{
         items: cart.items,
-        qtdeItems: cart.qtdeItems,
+        qtItems: cart.qtItems,
         totalValue: cart.totalValue,
         totalValueFull: cart.totalValueFull,
         installment: new CalculateInstallment().execute(cart.totalValue),

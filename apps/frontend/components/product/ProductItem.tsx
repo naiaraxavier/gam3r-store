@@ -4,12 +4,16 @@ import NoteReview from "../shared/noteReview";
 import { Coin, Product } from "@gstore/core";
 import Image from "next/image";
 import Link from "next/link";
+import useCart from "@/data/hooks/useCart";
+import { useInstallment } from "@/data/hooks/useInstallment";
 
 export interface ProductItemProps {
   product: Product;
 }
 
 export const ProductItem = ({ product }: ProductItemProps) => {
+  const { addItem } = useCart();
+  const installment = useInstallment(product.promotionalPrice);
   return (
     <Link
       href={`/product/${product.id}`}
@@ -46,18 +50,17 @@ export const ProductItem = ({ product }: ProductItemProps) => {
             por {Coin.formate(product.promotionalPrice)}
           </span>
 
-          {/* <span className="text-zinc-400 text-xs">
-            até {parcelamento.qtdeParcelas}x de{' '}
-            {Moeda.formatar(parcelamento.valorParcela)}
-          </span> */}
+          <span className="text-zinc-400 text-xs">
+            até {installment.installmentQuantity}x de{" "}
+            {Coin.formate(installment.installmentValue)}
+          </span>
         </div>
 
         <button
           className="flex justify-center items-center gap-2 h-8 bg-violet-700 hover:border-2 border-emerald-500 rounded-full"
           onClick={(e) => {
             e.preventDefault();
-            console.log("Adicionar ao carrinho");
-            // adicionarItem(props.produto)
+            addItem(product);
           }}
         >
           <IconShoppingCartPlus size={20} />

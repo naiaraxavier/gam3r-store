@@ -1,11 +1,11 @@
+"use client";
 import Link from "next/link";
 import { Logo } from "../shared/Logo";
 import { IconCart } from "../shared/IconCart";
-// import useCarrinho from '@/data/hooks/useCarrinho'
+import useCart from "@/data/hooks/useCart";
 
 export const Header = () => {
-  const quantityItems = 0;
-  // const { qtdeItens } = useCarrinho()
+  const { qtItems } = useCart();
   return (
     <div
       className="flex flex-col h-20"
@@ -17,8 +17,8 @@ export const Header = () => {
       <div className="flex-1 container flex flex-col justify-center">
         <div className="flex justify-between items-center">
           <Logo />
-          <Link href="/checkout/carrinho">
-            <IconCart quantityItems={quantityItems} />
+          <Link href="/checkout/cart">
+            <IconCart quantityItems={qtItems} />
           </Link>
         </div>
       </div>

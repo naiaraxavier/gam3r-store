@@ -1,14 +1,49 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { OrderPrisma } from './order.prisma';
-import { Order } from '@gstore/core';
+import { Order, OrderedItem } from '@gstore/core';
+import { OrderDTO } from './order.dto';
 
 @Controller('orders')
 export class OrderController {
   constructor(private readonly repo: OrderPrisma) {}
 
   @Post()
-  async save(@Body() order: Order) {
-    return this.repo.save(order);
+  async save(@Body() orderDto: OrderDTO) {
+    try {
+      const order: Order = {
+        id: undefined,
+        date: orderDto.date,
+        totalValue: orderDto.totalValue,
+        paymentMethod: orderDto.paymentMethod,
+        status: orderDto.status,
+        delivery: {
+          id: undefined,
+          ...orderDto.delivery,
+        },
+        items: orderDto.items.map((item) => ({
+          ...item,
+          product: item.product,
+        })) as unknown as OrderedItem[],
+      };
+
+      const savedOrder = await this.repo.save(order);
+      return savedOrder;
+    } catch (e) {
+      console.error('Error saving order:', e);
+      throw new HttpException(
+        'Error saving order',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get()

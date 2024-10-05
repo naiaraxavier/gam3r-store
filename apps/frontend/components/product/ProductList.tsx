@@ -1,12 +1,11 @@
 "use client";
 
-import { products } from "@gstore/core";
-// import useProdutos from '@/data/hooks/useProdutos'
 import { ProductItem } from "./ProductItem";
 import { ProductNotFound } from "./ProductNotFound";
+import useProducts from "@/data/hooks/useProducts";
 
 export const ProductList = () => {
-  // const { produtos } = useProdutos()
+  const { products } = useProducts();
   return products.length ? (
     <div
       className="

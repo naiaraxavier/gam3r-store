@@ -3,18 +3,18 @@ import { useAPI } from "../hooks/useAPI";
 import { FilterProducts, Product } from "@gstore/core";
 import { createContext, useCallback, useEffect, useState } from "react";
 
-export interface ContextoProdutosProps {
+export interface ContextProdutosProps {
   search: string;
   products: Product[];
-  setsearch: (search: string) => void;
+  setSearch: (search: string) => void;
   productById: (id: number) => Product | null;
 }
 
-const ContextProducts = createContext<ContextoProdutosProps>({} as any);
+const ContextProducts = createContext<ContextProdutosProps>({} as any);
 
 export const ProviderProducts = (props: any) => {
   const { httpGet } = useAPI();
-  const [search, setsearch] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
 
   const loadProducts = useCallback(async () => {
@@ -34,7 +34,7 @@ export const ProviderProducts = (props: any) => {
           if (!search) return products;
           return new FilterProducts().execute(search, products);
         },
-        setsearch,
+        setSearch,
         productById: (id: number) =>
           products.find((product) => product.id === id) ?? null,
       }}

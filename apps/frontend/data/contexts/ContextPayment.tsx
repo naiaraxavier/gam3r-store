@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
 import { useAPI } from "../hooks/useAPI";
+import useCart from "../hooks/useCart";
 import {
   CartItem,
   Order,

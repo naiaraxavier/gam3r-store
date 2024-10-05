@@ -33,7 +33,7 @@ export default class Cart {
     return new Cart();
   }
 
-  get qtdeItems() {
+  get qtItems() {
     return this.items.map((item) => item.quantity).reduce((a, b) => a + b, 0);
   }
 
